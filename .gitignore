@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+debug_conn.py
+
+# Environment & Secrets
+.env
+
+# Jupyter
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# Oracle / Docker local data
+oracle-data/
+*.dbf
+*.p12
+*.ora
+*.log
+
+# Temporary Lab Scripts
+*.sql
+
+# OS Files
+.DS_Store
+Thumbs.db

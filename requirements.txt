@@ -1,0 +1,5 @@
+oracledb
+rich
+python-dotenv
+faker
+pandas

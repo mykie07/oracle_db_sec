@@ -1,0 +1,37 @@
+services:
+  oracle-db:
+    image: container-registry.oracle.com/database/express:21.3.0-xe
+    container_name: oracle-security-lab-db
+    ports:
+      - "1521:1521"
+    environment:
+      - ORACLE_PASSWORD=${ORACLE_PASSWORD}
+      - ORACLE_CHARACTERSET=${ORACLE_CHARACTERSET}
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    healthcheck:
+      test: [ "CMD-SHELL", "sqlplus -S / as sysdba <<<'exit;'" ]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+      start_period: 60s
+
+  security-lab:
+    build: .
+    container_name: oracle-security-lab-app
+    depends_on:
+      oracle-db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DSN=${DB_DSN}
+      - HR_PASSWORD=${HR_PASSWORD}
+      - PII_PASSWORD=${PII_PASSWORD}
+      - PYTHONPATH=/app
+    tty: true
+
+volumes:
+  oracle-data:
