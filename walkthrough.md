@@ -47,7 +47,11 @@ This document summarizes the implementation and verification of the Oracle Datab
 - **Action**: Created an "Administrator Trap" policy on sensitive PII columns.
 - **Result**: Detected and logged a DBA (`IT_ADMIN`) attempting to "peek" at PII data, even though they have the highest system privileges.
 
+### 09. Secure Backup & Resiliency (`09_secure_backup.py`)
+- **Action**: Enabled ARCHIVELOG mode and configured RMAN encryption.
+- **Result**: Verified that the USERS tablespace is backed up in encrypted format (`AES256`) and that the database is tracking transactions in real-time.
+
 ---
 **Laboratory Status**: [COMPLETED]
 **Vulnerabilities Identified**: 5/5
-**Defense Modules Active**: 8/8
+**Defense Modules Active**: 9/9

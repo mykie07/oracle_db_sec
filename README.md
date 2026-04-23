@@ -62,9 +62,15 @@ Implement Virtual Private Database (VPD) to filter data rows based on the user's
 `python lab/07_tde.py`
 Configure a software keystore and encrypt sensitive columns (SSN) at the storage level.
 
-### 08: Fine-Grained Auditing (The Admin Trap)
-`python lab/08_fga_trap.py`
-Use `DBMS_FGA` to create "stealth" triggers that detect and log when administrative users (DBAs) access sensitive application data.
+### 09: Secure Backup & Resiliency (ZDLRA Simulation)
+`python lab/09_secure_backup.py`
+Verify that the database is in ARCHIVELOG mode and that backups are encrypted using the TDE wallet, simulating the security of a Zero Data Loss Recovery Appliance.
+
+## 🛠️ Laboratory Maintenance & Reference
+For detailed instructions and technical deep-dives, please refer to:
+*   **[Lab Administrator's Guide](LAB_ADMIN_GUIDE.md)**: Managing the vault, restarts, and troubleshooting.
+*   **[Security Tools Reference](SECURITY_TOOLS_REFERENCE.md)**: Deep dive into the security features and variants used.
+*   **[Automation & CI/CD Guide](SECURITY_AUTOMATION_GUIDE.md)**: Scaling to DevSecOps, IaC, and Terraform.
 
 ## Security Warning
 This lab intentionally creates **vulnerable users and configurations**. Do NOT deploy this setup to a production environment.
