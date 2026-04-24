@@ -81,6 +81,9 @@ def main():
         setup_redaction_policy()
         verify_redaction()
     except Exception as e:
+        if "ORA-28365" in str(e):
+            console.print("[yellow]Note: This table appears to be encrypted (TDE).[/yellow]")
+            console.print("[yellow]In the Manual Lab, you must either complete Module 07 first or open the wallet manually.[/yellow]")
         console.print(f"[red]Error in Redaction lab:[/red] {e}")
 
 if __name__ == "__main__":

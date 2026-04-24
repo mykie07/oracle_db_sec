@@ -98,7 +98,7 @@ def simulate_user_session(dept_id, user_description):
     count = cursor.fetchone()[0]
     
     # Sample data
-    cursor.execute("SELECT first_name, last_name, dept_id FROM HR.EMPLOYEES FETCH FIRST 3 ROWS ONLY")
+    cursor.execute("SELECT first_name, last_name, dept_id FROM HR.EMPLOYEES FETCH FIRST 5 ROWS ONLY")
     rows = cursor.fetchall()
     
     table = Table(title=f"Visible Records for Dept {dept_id}")
@@ -120,11 +120,11 @@ def main():
     try:
         setup_vpd_policy()
         
-        # Scenario 1: Manager in Dept 10
-        simulate_user_session(10, "Sales Manager")
+        # Scenario 1: Manager in Dept 1
+        simulate_user_session(1, "Sales Manager")
         
-        # Scenario 2: Manager in Dept 30
-        simulate_user_session(30, "Engineering Lead")
+        # Scenario 2: Manager in Dept 3
+        simulate_user_session(3, "Engineering Lead")
         
         # Scenario 3: Admin (Bypassing VPD)
         console.print("\n[bold red]Simulating Session: IT_ADMIN (Bypassing VPD)[/bold red]")

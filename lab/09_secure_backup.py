@@ -11,12 +11,13 @@ import os
 def setup_secure_backup():
     """Verifies that RMAN is configured for encryption."""
     console.print("[yellow]Verifying RMAN Secure Backup Configuration...[/yellow]")
+    from lab.core.config import DB_PASSWORD, get_cdb_dsn
     
     # Connect to CDB Root to see global RMAN config
-    root_dsn = os.getenv("DB_DSN", "oracle-db:1521/XEPDB1").replace("XEPDB1", "XE")
+    root_dsn = get_cdb_dsn()
     conn = oracledb.connect(
         user="sys", 
-        password=os.getenv("DB_PASSWORD"), 
+        password=DB_PASSWORD, 
         dsn=root_dsn, 
         mode=oracledb.AUTH_MODE_SYSDBA
     )
@@ -46,12 +47,13 @@ def setup_secure_backup():
 def verify_encryption():
     """Verifies that the generated backup pieces are indeed encrypted."""
     console.print("\n[bold yellow]Auditing Backup Encryption Status (ZDLRA Proof):[/bold yellow]")
+    from lab.core.config import DB_PASSWORD, get_cdb_dsn
     
     # Connect to CDB Root for the backup catalog
-    root_dsn = os.getenv("DB_DSN", "oracle-db:1521/XEPDB1").replace("XEPDB1", "XE")
+    root_dsn = get_cdb_dsn()
     conn = oracledb.connect(
         user="sys", 
-        password=os.getenv("DB_PASSWORD"), 
+        password=DB_PASSWORD, 
         dsn=root_dsn, 
         mode=oracledb.AUTH_MODE_SYSDBA
     )

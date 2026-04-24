@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  oracle-db-auto:
+    image: gvenzl/oracle-xe:21
+    container_name: oracle-db-auto
+    environment:
+      - ORACLE_PASSWORD=SecurityLab2026!
+      - LAB_ENV=AUTOMATED
+    ports:
+      - "1522:1521"
+    volumes:
+      - oracle-auto-data:/opt/oracle/oradata
+      - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - security-auto-net
+    healthcheck:
+      # This check ensures the PDB is open AND our initialization scripts have finished
+      test: ["CMD-SHELL", "sqlplus -S / as sysdba <<<'SELECT 1 FROM HR.EMPLOYEES WHERE ROWNUM=1;'"]
+      interval: 30s
+      timeout: 10s
+      retries: 30
+      start_period: 180s
+
+  oracle-app-auto:
+    build: .
+    container_name: oracle-app-auto
+    depends_on:
+      oracle-db-auto:
+        condition: service_healthy
+    environment:
+      - LAB_ENV=AUTOMATED
+      - PYTHONPATH=/app
+    volumes:
+      - .:/app
+    env_file:
+      - .env.auto
+    networks:
+      - security-auto-net
+
+networks:
+  security-auto-net:
+    driver: bridge
+
+volumes:
+  oracle-auto-data:
